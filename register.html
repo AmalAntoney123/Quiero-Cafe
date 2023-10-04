@@ -1,0 +1,418 @@
+<html>
+
+<head>
+    <title>Quiero Cafe</title>
+    <link rel="icon" href="assets/images/logotitle.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <?html
+        session_start();
+    ?>
+    <script>
+        var verified1 = 1;
+        var verified2 = 1;
+        var verified3 = 1;
+        var verified4 = 1;
+        var verified5 = 1;
+        var verified6 = 1;
+        var verified7 = 1;
+        var verified8 = 1;
+        $(document).ready(function() {
+            var rname = /^[a-zA-Z ]+$/
+            var runame = /^[a-zA-Z0-9_.]+$/
+            var rmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+            var rpass = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
+
+            $("#fname").keyup(function() {
+                var name_input = $("#fname").val();
+                if (rname.test(name_input) == false) {
+                    $(".text1").show();
+                    verified1 = 1;
+                    $("#sub").addClass('disabled')
+                } else if (rname.test(name_input) == true) {
+                    $(".text1").hide();
+                    verified1 = 0;
+                    $("#sub").removeClass('disabled')
+                }
+            });
+            $("#mail").keyup(function() {
+                var mail_input = $("#mail").val();
+                if (rmail.test(mail_input) == false) {
+                    $(".text2").show();
+                    verified2 = 1
+                    $("#sub").addClass('disabled')
+                } else if (rmail.test(mail_input) == true) {
+                    $(".text2").hide();
+                    verified2 = 0
+                    $("#sub").removeClass('disabled')
+                }
+            });
+            $("#uname1").keyup(function() {
+                var uname_input = $("#uname1").val();
+                if (runame.test(uname_input) == false) {
+                    $(".text3").show();
+                    verified3 = 1
+                    $("#sub").addClass('disabled')
+                } else if (runame.test(uname_input) == true) {
+                    $(".text3").hide();
+                    verified3 = 0
+                    $("#sub").removeClass('disabled')
+                }
+            });
+            $("#pass").keyup(function() {
+                var pass_input = $("#pass").val();
+                if (rpass.test(pass_input) == false) {
+                    $(".text4").show();
+                    $("#sub").addClass('disabled')
+                    verified4 = 1
+                } else if (rpass.test(pass_input) == true) {
+                    $(".text4").hide();
+                    verified4 = 0
+                    $("#sub").removeClass('disabled')
+                }
+            });
+            $("#country").blur(function() {
+                var country_input = $("#country").val();
+                if (country_input==null) {
+                    verified6 = 1
+                    $("#sub").addClass('disabled')
+                } else  {
+                    verified6 = 0
+                    $("#sub").removeClass('disabled')
+                }
+            });
+            $("#file").blur(function() {
+                var file_input = $("#file").val();
+                if (file_input==null) {
+                    verified6 = 1
+                    $("#sub").addClass('disabled')
+                } else  {
+                    verified6 = 0
+                    $("#sub").removeClass('disabled')
+                }
+            });
+            $("#cpass").keyup(function () {
+                var cpass_input = $("#cpass").val();
+                var pass_input = $("#pass").val();
+                if (pass_input != cpass_input) {
+                    $(".text5").show();
+                    verified5 = 1
+                    $("#sub").addClass('disabled')
+                }
+                if (pass_input == cpass_input) {
+                    $(".text5").hide();
+                    verified5 = 0
+                    $("#sub").removeClass('disabled')
+                }
+            });
+            $("#sub").click(function (){
+                if (verified1 == 0 && verified2 == 0 && verified3 == 0 && verified4 == 0 && verified5 == 0 && verified6 == 0 && verified7 == 0 && verified8== 0 ){
+                    valid = 0;
+                    return true;
+                }
+                else{
+                    alert("Incorrect Entry");
+                    valid = 1;
+                    return false;
+                }
+            });
+        })
+        
+        function checkAvailability() {
+            jQuery.ajax({
+                url: "available.html",
+                data: 'uname=' + $("#uname1").val(),
+                type: "POST",
+                success: function(data) {
+                    $("#user-availability-status").html(data);
+                },
+                error: function() {
+                    verified7 = 1;
+                }
+            });
+        }   
+        function checkAvailability2() {
+            jQuery.ajax({
+                url: "available2.html",
+                data: 'mail=' + $("#mail").val(),
+                type: "POST",
+                success: function(data) {
+                    $("#user-availability-status1").html(data);
+                },
+                error: function() {
+                    verified8 = 1;
+                }
+            });
+        }   
+
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'legan';
+            src: url('assets/font/Legan.ttf');
+        }
+
+        html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            font-family: legan;
+        }
+
+        .bg-image {
+            background-size: 110% 110%;
+            background-position: center center;
+            animation: shrink 20s infinite alternate;
+        }
+
+        @keyframes shrink {
+            0% {
+                background-size: 110% 110%;
+            }
+
+            100% {
+                background-size: 100% 100%;
+            }
+        }
+
+        .logotitle {
+            height: 40px;
+            width: 100px;
+        }
+
+        .navbar {
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+
+        .text1 {
+            display: none;
+            margin-left: 20px;
+            color: #fd4747;
+            font-size: 15px;
+            position: absolute;
+            top: 518px;
+            right: 731px;
+        }
+
+        .text2 {
+            display: none;
+            margin-left: 20px;
+            color: #fd4747;
+            font-size: 15px;
+            position: absolute;
+            top: 601px;
+            right: 887px;
+        }
+
+        .text3 {
+            display: none;
+            margin-left: 20px;
+            color: #fd4747;
+            font-size: 15px;
+            position: absolute;
+            top: 518px;
+            right: 268px;
+        }
+
+        .text4 {
+            display: none;
+            margin-left: 20px;
+            color: #fd4747;
+            font-size: 15px;
+            position: absolute;
+            top: 688px;
+            right: 414px;
+        }
+        
+       
+        .text5 {
+            display: none;
+            margin-left: 20px;
+            color: #fd4747;
+            font-size: 15px;
+            position: absolute;
+            top: 776px;
+            right: 753px;
+        }
+        .text6 {
+            margin-left: 20px;
+            color: #fd4747;
+            font-size: 15px;
+            position: absolute;
+            top: 148px;
+            right: 238px;
+        }
+        .text7 {
+            margin-left: 20px;
+            color: #fd4747;
+            font-size: 15px;
+            position: absolute;
+            top: 232px;
+            right: 238px;
+        }
+        .img4 {
+            height: 20px;
+            width: 20px;
+        }
+        .imgprofile{
+            height: 40px;
+            width: 40px;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div class="container p-0" id="header">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top fs-4">
+            <a href="index.html" class="navbar-brand"><img src="assets/images/logosmall.png" class="p-0 m-0 logotitle">&nbsp;&nbsp;</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toggleMobileMenu" aria-controls="toggleMobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                <div class="navbar-nav ms-auto text-center">
+                    <a class="nav-item nav-link" href="index.html">Home</a>
+                    <a class="nav-item nav-link" href="index.html#about">About</a>
+                    <a class="nav-item nav-link" href="index.html#menu">Menu</a>
+                    <a class="nav-item nav-link align-self-center" href="shop.html">Shop</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        |&nbsp;Login/Register
+                        </a>
+                        <ul class="dropdown-menu bg-dark text-light" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item text-light" href="login.html">Login</a></li>
+                            <li><a class="dropdown-item text-light" href="register.html">Register</a></li>
+                        </ul>
+                    </li>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+    <section class="text-center">
+
+        <div class="p-5 bg-image" style="
+          background-image: url('Assets/images/bg2.jpg');
+          height: 500px;background-size: cover;background-attachment: fixed;"></div>
+
+        <div class="card mx-4 mx-md-5 mb-5 shadow-lg" style="margin-top: -100px;">
+            <div class="card-body py-5 px-md-5 ">
+
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="fw-bold fs-1 mb-5">Sign up now</h2>
+                        <form action="save.html" method="POST" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <input type="text" id="fname" name="fname" class="form-control" />
+                                        <label class="form-label" for="fname">Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <div id="user-availability-status" class="text6"></div>
+                                        <input type="text" id="uname1" name="uname" class="form-control"  onkeyup="checkAvailability()" />
+                                        <label class="form-label" for="uname">User name</label>
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <div id="user-availability-status1" class="text7"></div>
+                                <input type="email" id="mail" name="mail" class="form-control" onkeyup="checkAvailability2()"/>
+                                <label class="form-label" for="mail">Email address</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                    <input type="password" id="pass" name="pass" class="form-control" />
+                                <label class="form-label" for="pass">Password</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                    <input type="password" id="cpass" name="cpass" class="form-control" />
+                                <label class="form-label" for="cpass">Confirm Password</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <input type="file" id="file" name="p_pic" class="form-control" accept="image/png, image/gif, image/jpeg"/>
+                                <label class="form-label" for="file">Profile Picture</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <span class="form-label" for="female">Gender&nbsp;&nbsp;</span>
+                                        <input type="radio" class="btn-check" name="options" value="male" id="male" autocomplete="off">
+                                        <label class="btn btn-secondary" for="male">Male&nbsp;&nbsp;</label>
+
+                                        <input type="radio" class="btn-check" name="options" value="female" id="female" autocomplete="off">
+                                        <label class="btn btn-secondary" for="female">Female</label>
+
+                                        <input type="radio" class="btn-check" name="options" value="other" id="other" autocomplete="off">
+                                        <label class="btn btn-secondary" for="other">Other</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <select class="form-select" aria-label="Default select example" id="country" name="country">
+                                            <option selected>Select Country</option>
+                                            <option value="india">India</option>
+                                            <option value="usa">USA</option>
+                                            <option value="uk">UK</option>
+                                            <option value="canada">Canada</option>
+                                        </select>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <input type="submit"  class="btn btn-primary btn-block mb-4 w-100" id="sub" name="sub" value="Sign Up">
+                            <p>Already have an account? <a href="login.html" class="link-info  text-decoration-none">Sign-in here</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="error">
+        <span class="text1">*Name should contain alphabets only!</span>
+        <span class="text2">*Invalid Email!</span>
+        <span class="text3">*Userame should contain alphabets, numbers and _ !</span>
+        <span class="text4">*Password should contain atleast 6 Characters and a special character and a number!</span>
+        <span class="text5">*Password and Confirm not equal!</span>
+    </div>
+    <div class="container-fluid bg-dark h-25 ">
+        <div class="row h-100 align-items-center">
+            <div class="col-md-4 ">
+                <span class="text-light m-5">© 2022 Quiero Cafe, All Rights Reserved</span>
+            </div>
+            <div class="col-md-4">
+                <a href="index.html" class="link-light m-3 fs-4 text-decoration-none">HOME</a>
+                <a href="index.html#about" class="link-light m-3 fs-4 text-decoration-none">ABOUT</a>
+                <a href="index.html#menu" class="link-light m-3 fs-4 text-decoration-none">MENU</a>
+            </div>
+            <div class="col-md-4 ">
+                <a href="https://www.facebook.com/" class="m-3 me-auto"><img src="Assets/images/facebook.png" class="img4"></a>
+                <a href="https://instagram.com/" class="m-3 me-auto"><img src="Assets/images/insta.png" class="img4"></a>
+                <a href="https://twitter.com/?lang=en" class="m-3 me-auto"><img src="Assets/images/twitt.png" class="img4"></a>
+                <a href="https://telegram.org/" class="m-3 me-auto"><img src="Assets/images/tele.png" class="img4"></a>
+                <a href="https://mail.google.com/mail/u/0/" class="m-3 me-auto"><img src="Assets/images/email.png" class="img4"></a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
